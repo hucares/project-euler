@@ -1,0 +1,13 @@
+//This can be worked out by hand
+//Simply factor alls numbers from 1 to 20
+//Take each prime with the largest exponent
+//Multiply them together
+//
+//So to work out all numbers up till 6
+//1 = 1
+//2 = 2
+//3 = 3
+//4 = 2 * 2
+//5 = 5
+//6 = 2 * 3
+//Thus 2 * 2 * 3 * 5 = 60

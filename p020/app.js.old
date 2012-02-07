@@ -1,0 +1,14 @@
+//Unfortunately we cannot employ this method
+//The javascript things 112400072777760770%10 = 8
+
+var n = 100;
+var nFactorial = function() {
+    var factorial = 1;
+    for(var i = 1; i < n; i+=1) {
+        factorial *= i;
+        console.log(factorial);
+    };
+    return factorial;
+}();
+
+console.log(nFactorial);

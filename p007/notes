@@ -1,0 +1,4 @@
+//This guestion is essentially prime generation
+//If we employ the n^2 this would result in 100020001 operations
+//If we eploy nlogn this would result in ~92114 operations
+//This represents a 99.908 % improvement
