@@ -4,4 +4,14 @@ The paths on a 2x2 grid can be described by
 
 The enumeration of all possible paths are
 
+0011, 0101, 0110,
+1001, 1010, 1100
 
+It follows that all possible paths on a twenty by twenty grid are
+
+1111111111111111111100000000000000000000
+through
+0000000000000000000011111111111111111111
+
+The formula to determine the number of paths is
+40!/(20!*20!)
