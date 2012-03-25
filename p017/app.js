@@ -128,15 +128,28 @@ var numberOfLetters = function(x) {
                         + secondMagnitude(x%100);
         };
     };
+
     return thirdMagnitude(x);
 };
+
+
+//testing
+console.log(numberOfLetters(1));//3
+console.log(numberOfLetters(16));//7
+console.log(numberOfLetters(100));//10
+console.log(numberOfLetters(106));//16
+console.log(numberOfLetters(110));//16
+console.log(numberOfLetters(115));//20
+console.log(numberOfLetters(121));//22
+console.log(numberOfLetters(342));//23
+console.log(numberOfLetters(999));//24
 
 var sumOneToThou = function() {
     sum = 0;
     for(var i = 1; i < 1000; i+=1) {
         sum += numberOfLetters(i);
     };
-    return sum //+ thousand;
+    return sum + one + thousand;
 }();
 
 console.log(sumOneToThou);//21121
