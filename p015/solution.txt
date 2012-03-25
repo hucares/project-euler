@@ -1,0 +1,7 @@
+The paths on a 2x2 grid can be described by
+0 = right
+1 = down
+
+The enumeration of all possible paths are
+
+
