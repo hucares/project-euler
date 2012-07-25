@@ -9,6 +9,15 @@ for(var i = 2; i < 1001; i += 1) {
 };
 
 console.log('cycle distribution');
+var lengths = new Array(1001);
+for(var i = 0; i < lengths.length; i += 1) {
+  lengths[i] = 0;
+};
+
+length_cache.map(function(a) {
+  return lengths[a[1]] += 1;
+});
+console.log(lengths);
 
 console.log('index, maximum cycle');
 var max = length_cache.reduce(function (a,b) {
