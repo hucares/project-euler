@@ -2,64 +2,86 @@ var assert  = require("assert");
 var Cycle   = require('../cycle');
 
 describe('Cycle', function(){
-  describe('stream', function(){
+  describe('first_element', function() {
+    it('should return the proper values for 2', function() {
+      var x0 = Cycle.first_element(2);
+      assert.equal(x0[0], 5);
+      assert.equal(x0[1], 0);
+    });
+
+    it('should return the proper values for 29', function() {
+      var x0 = Cycle.first_element(29);
+      assert.equal(x0[0], 0);
+      assert.equal(x0[1], 10);
+    });
+
+    it('should return the proper values for 29', function() {
+      var x0 = Cycle.first_element(29);
+      assert.equal(x0[0], 0);
+      assert.equal(x0[1], 10);
+    });
+  });
+
+  describe('traverse_function', function(){
     it('should return the proper values for divisor of 2', function(){
-      var d2 = new Cycle.stream(2);
-      assert.equal(d2.quotient, 5);
-      assert.equal(d2.next(), 0);
-      assert.equal(d2.next(), 0);
-      assert.equal(d2.next(), 0);
-      d2.reset();
-      assert.equal(d2.quotient, 5);
+      var d2 = Cycle.traverse_function(2);
+      var x0 = Cycle.first_element(2);
+      assert.equal(d2(x0)[0], 0);
+      assert.equal(d2(x0)[1], 0);
+
+      assert.equal(d2(x0)[0], 0);
+      assert.equal(d2(x0)[0], 0);
     });
     
     it('should return the proper values for divisor of 7', function(){
-      var d7 = new Cycle.stream(7);
-      assert.equal(d7.quotient, 1);
-      assert.equal(d7.next(), 4);
-      assert.equal(d7.next(), 2);
-      assert.equal(d7.next(), 8);
-      d7.reset();
-      assert.equal(d7.quotient, 1);
-    });
-    
-    it('should return the proper values for divisor of 50', function(){
-      var d50 = new Cycle.stream(50);
-      assert.equal(d50.quotient, 0);
-      assert.equal(d50.next(), 2);
-      assert.equal(d50.next(), 0);
-      assert.equal(d50.next(), 0);
-      d50.reset();
-      assert.equal(d50.quotient, 0);
-    });
+      var d7 = Cycle.traverse_function(7);
+      var x0 = Cycle.first_element(7);
+      assert.equal(d7(x0)[0], 4);
+      assert.equal(d7(x0)[1], 2);
 
+      assert.equal(d7(d7(x0))[0], 2);
+      assert.equal(d7(d7(x0))[1], 6);
+    });
+    it('should return the proper values for divisor of 29', function(){
+      var d29 = Cycle.traverse_function(29);
+      var x0 = Cycle.first_element(29);
+      assert.equal(d29(x0)[0], 3);
+      assert.equal(d29(x0)[1], 13);
+
+
+      //assert.equal(d7(d7(x0))[0], 2);
+      //assert.equal(d7(d7(x0))[1], 6);
+    });
+ 
   });
 
-  describe('#cycle_length', function(){
+  describe('floyd', function(){
     it('should return the proper cycle length for a divisor of 2', function(){
-      var cycle_length = Cycle.cycle_length;
-      assert.equal(cycle_length(2), 1);
+      var f   = Cycle.traverse_function(2);
+      var x0  = Cycle.first_element(2);
+      assert.equal(Cycle.floyd(f, x0), 1);
     });
     it('should return the proper cycle length for a divisor of 7', function(){
-      var cycle_length = Cycle.cycle_length;
-      assert.equal(cycle_length(7), 6);
+      var f   = Cycle.traverse_function(7);
+      var x0  = Cycle.first_element(7);
+      assert.equal(Cycle.floyd(f, x0), 6);
     });
     it('should return the proper cycle length for a divisor of 11', function(){
-      var cycle_length = Cycle.cycle_length;
-      assert.equal(cycle_length(11), 2);
+      var f   = Cycle.traverse_function(11);
+      var x0  = Cycle.first_element(11);
+      assert.equal(Cycle.floyd(f, x0), 2);
     });
-    it('should return the proper cycle length for a divisor of 12', function(){
-      var cycle_length = Cycle.cycle_length;
-      assert.equal(cycle_length(12), 1);
-    });
-    it('should return the proper cycle length for a divisor of 25', function(){
-      var cycle_length = Cycle.cycle_length;
-      assert.equal(cycle_length(25), 1);
-    });
+    //it('should return the proper cycle length for a divisor of 29', function(){
+      //var f   = Cycle.traverse_function(29);
+      //var x0  = Cycle.first_element(29);
+      //assert.equal(Cycle.floyd(f, x0), 1);
+    //});
     it('should return the proper cycle length for a divisor of 50', function(){
-      var cycle_length = Cycle.cycle_length;
-      assert.equal(cycle_length(50), 1);
+      var f   = Cycle.traverse_function(50);
+      var x0  = Cycle.first_element(50);
+      console.log(f);
+      console.log(x0);
+      assert.equal(Cycle.floyd(f, x0), 1);
     });
-
   });
 });

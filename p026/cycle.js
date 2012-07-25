@@ -1,65 +1,50 @@
 var module = exports;
 
-module.stream = function (d) {
-  this.reset = function(){
-    this.index    = 0;
-    this.dividend = 10;
-    this.divisor  = d;
-    this.quotient = undefined;
-    this.next();
-    return true;
+module.traverse_function = function (d) {
+  return function(x) {
+    return [Math.floor((x[1]*10)/d), (x[1]*10)%d];
   };
-
-  this.next     = function() {
-    this.index   += 1;
-    this.quotient  = Math.floor(this.dividend/this.divisor);
-    this.dividend  = (this.dividend % this.divisor) * 10;
-    return this.quotient;
-  };
-
-  this.reset();
 };
 
-module.cycle_length = function(d) {
-  var hare    = new module.stream(d);
-  var turtle  = new module.stream(d);
+module.first_element = function(d) {
+  var value     = Math.floor(10/d);
+  var remainder = 10 - value*d;
+  return [value, remainder];
+};
 
-  hare.next();
-  hare.next();
-  turtle.next();
+module.floyd = function(f, x0) {
+  var turtle  = f(x0);
+  var hare    = f(f(x0));
 
-  //search for i*x = 2*i*x
-  while(hare.quotient !== turtle.quotient) {
-    hare.next();
-    hare.next();
-    turtle.next();
+  var i = 0;
+  while (turtle[0] != hare[0] && turtle[1] != hare[1]) {
+    turtle  = f(turtle);
+    hare    = f(f(hare));
+    i += 1;
   };
 
-  //search micro
-  var mu = 0;
-  turtle.reset();
+  console.log(i);
 
-
-  while(hare.quotient !== turtle.quotient) {
-    hare.next();
-    turtle.next();
+  var mu  = 0;
+  turtle  = x0;
+  while(turtle[0] != hare[0] && turtle[1] != hare[1]) {
+    turtle = f(turtle);
+    hare = f(hare);
     mu += 1;
+    //console.log('pasta');
   };
+  console.log('dfdfdf');
 
-  //search for lambda
-  hare.reset();
-  for(var i = 0; i < mu + 1; i += 1) {
-    hare.next();
-  };
-
-  //return turtle.index;
-  var lam = 1;
-  while(hare.quotient !== turtle.quotient) {
-    hare.next();
+  var lam   = 1;
+  hare  = f(turtle);
+  while(turtle[0] != hare[0] && turtle[1] != hare[1]) {
+    hare = f(hare);
     lam += 1;
- };
+  };
 
   return lam;
 };
 
-console.log(module.cycle_length(50));
+//var f   = module.traverse_function(29);
+//var x0  = module.first_element(29);
+//console.log(module.floyd(f, x0));
